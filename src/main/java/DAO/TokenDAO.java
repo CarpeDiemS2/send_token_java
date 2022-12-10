@@ -39,4 +39,22 @@ public class TokenDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void salvar(Token token){
+        String sql = "INSERT INTO tbtoken (codigo, fk_contato) VALUES (?,?)";
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, token.getCodigo());
+            preparedStatement.setInt(2, token.getFk_contato());
+            preparedStatement.execute();
+            System.out.println("Salvo com sucesso!");
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -1,7 +1,9 @@
 import Controller.EmailController;
 import DAO.ContatoDAO;
+import DAO.TokenDAO;
 import factory.ConnectionFactory;
 import model.Contato;
+import model.Token;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -15,6 +17,7 @@ public class App {
         Connection connection = connectionFactory.recoveryConnection();
 
         ContatoDAO contatoDAO = new ContatoDAO(connection);
+        TokenDAO tokenDAO = new TokenDAO(connection);
 
         StringBuilder stringBuilder = new StringBuilder();
         criarTemplateEmail(stringBuilder);
@@ -29,6 +32,7 @@ public class App {
         emailController.setRemetente("Oliver");
 
         List<Contato> listaTodosContatos = contatoDAO.listar();
+        List<Token> listaTodosTokens = tokenDAO.listar();
 
         /*Envia email para para todo mundo de uma vez só, atravês de uma string acumuladora*/
         /*String formatadorEmail = "";
