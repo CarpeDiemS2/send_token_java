@@ -1,3 +1,4 @@
+import API.RandomString;
 import Controller.EmailController;
 import DAO.ContatoDAO;
 import DAO.TokenDAO;
@@ -40,14 +41,20 @@ public class App {
             formatadorEmail += listaTodosContato.getEmail().concat(",");
         }*/
 
+
+        System.out.println(gerarRandomCodigo(20));
+
         /*Envia email 1 por 1*/
         listaTodosContatos.forEach(contato -> {
+
+
+
             emailController.setDestinatarios(contato.getEmail());
             emailController.setCabecalho("Fala! " + contato.getNome());
             emailController.setAssunto(stringBuilder.toString());
 
             try{
-                emailController.enviar(true);
+                emailController.enviar(false);
                     //verificadora = false;
             } catch (MessagingException e) {
                 throw new RuntimeException(e);
@@ -81,6 +88,26 @@ public class App {
                 //stringBuilder.append("<img style='position: absolute; bottom: 50px; width: 300px;' src='https://www.campaignmonitor.com/wp-content/uploads/2019/09/CountdownGIF.gif'>");
             stringBuilder.append("</div>");
         stringBuilder.append("</div>");
+    }
+
+    public static String gerarRandomCodigo(int n){
+
+// chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789" + "abcdefghijklmnopqrstuvxyz";
+
+// create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(n);
+
+        for (int i = 0; i < n; i++) {
+
+// generate a random number between
+// 0 to AlphaNumericString variable length
+                int index = (int)(AlphaNumericString.length() * Math.random());
+
+// add Character one by one in end of sb
+                sb.append(AlphaNumericString.charAt(index));
+        }
+        return sb.toString();
     }
 }
 
